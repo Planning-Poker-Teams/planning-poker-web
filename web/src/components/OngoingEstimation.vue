@@ -19,7 +19,7 @@
         </button>
     </div>
 
-    <div class="grid grid-cols-4 col-gap-2 row-gap-2 mb-4" v-if="!isSpectator">
+    <div class="grid grid-cols-4 gab-x-2 gab-y-2 mb-4" v-if="!isSpectator">
       <div
         class="flex flex-col justify-center w-16 lg:w-20 h-24 lg:h-32 rounded-lg shadow cursor-pointer select-none relative"
         :class="value == selectedEstimation ? 'bg-red-400 opacity-90' : 'bg-blue-400'"

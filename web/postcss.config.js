@@ -1,3 +1,6 @@
 module.exports = {
-  plugins: [require('tailwindcss')('tailwind.js'), require('autoprefixer')()],
+  purge: {
+    preserveHtmlElements: false,
+  },
+  plugins: [require('tailwindcss')('tailwind.js')],
 };

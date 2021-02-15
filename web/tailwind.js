@@ -2,6 +2,7 @@ module.exports = {
   purge: {
     content: ['./public/index.html', './src/**/*.html', './src/**/*.vue'],
   },
+  darkMode: 'media',
   theme: {
     extend: {
       width: {
