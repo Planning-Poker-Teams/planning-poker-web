@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full w-full flex flex-col items-center bg-gray-100 lg:shadow-lg lg:rounded-lg relative overflow-y-scroll"
+    class="h-full w-full flex flex-col items-center bg-gray-100 dark:bg-gray-700 lg:shadow-lg lg:rounded-lg relative overflow-y-scroll"
   >
     <room-header :participants="participants" :roomName="roomName" />
     <ongoing-estimation
@@ -10,19 +10,20 @@
       @request-result="requestResult"
     />
     <estimation-result v-if="estimationResultAvailable" />
-    <start-estimation-form v-if="!isEstimationOngoing" @start-estimation="startEstimation" />
+    <start-estimation-form
+      v-if="!isEstimationOngoing"
+      @start-estimation="startEstimation"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Prop, Watch, Component } from 'vue-property-decorator';
-import { Route } from 'vue-router';
+import { Vue, Component } from 'vue-property-decorator';
 import RoomHeader from '@/components/RoomHeader.vue';
 import StartEstimationForm from '@/components/StartEstimationForm.vue';
 import OngoingEstimation from '@/components/OngoingEstimation.vue';
 import EstimationResult from '@/components/EstimationResult.vue';
 import { Participant } from '../store/types';
-import { Mutations } from '../store/mutations';
 import { Actions } from '../store/actions';
 import { EstimationState } from '../store/getters';
 

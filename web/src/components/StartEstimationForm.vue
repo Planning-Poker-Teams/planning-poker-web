@@ -4,12 +4,12 @@
     class="w-full flex-1 flex flex-col justify-center items-center p-4"
   >
     <input
-      class="p-2 mb-4 w-full lg:w-1/2 text-center text-lg font-semi bg-white appearance-none border-4 rounded text-grey-darker focus:outline-none focus:border-green-300"
+      class="p-2 mb-4 w-full lg:w-1/2 text-center text-lg font-semi bg-white dark:bg-gray-700 appearance-none border-4 rounded dark:border-gray-400 text-grey-darker dark:text-gray-200 dark:placeholder-gray-200 focus:outline-none focus:border-green-300"
       placeholder="Task name"
       v-model="newTaskName"
     />
     <button
-      class="m-2 px-6 py-2 bg-gray-300 text-gray-700 p-2 border-2 hover:border-gray-400 border-gray-300 rounded"
+      class="m-2 px-6 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 p-2 border-2 hover:border-gray-400 dark:hover:border-gray-400 dark:hover:bg-gray-700 border-gray-300 dark:border-gray-400 rounded"
       type="submit"
       :disabled="!taskNameIsSet"
       @click="startEstimation(newTaskName)"
@@ -18,7 +18,7 @@
       Start estimating
     </button>
     <button
-      class="m-2 px-6 py-2 bg-gray-300 text-gray-700 p-2 border-2 hover:border-gray-400 border-gray-300 rounded"
+      class="m-2 px-6 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 p-2 border-2 hover:border-gray-400 dark:hover:border-gray-400 dark:hover:bg-gray-700 border-gray-300 dark:border-gray-400 rounded"
       type="button"
       v-if="showEstimateAgainButton"
       @click="startEstimation(previousTaskName)"

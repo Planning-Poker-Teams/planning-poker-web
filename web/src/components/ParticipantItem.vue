@@ -1,7 +1,9 @@
 <template>
   <div
-    class="flex-none flex justify-center items-center w-16 h-16 m-1 p-1 text-sm shadow rounded-full select-none"
-    :class="hasVoted ? 'bg-red-400' : 'bg-green-400'"
+    class="flex-none flex justify-center items-center w-16 h-16 m-1 p-1 text-sm shadow rounded-full select-none dark:opacity-90"
+    :class="
+      hasVoted ? 'bg-red-400 dark:bg-red-800' : 'bg-green-400 dark:bg-green-800'
+    "
   >
     <p class="text-center text-white font-medium text-xs overflow-x-hidden">
       {{ name }}
