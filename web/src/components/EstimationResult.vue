@@ -1,8 +1,10 @@
 <template>
   <section class="flex-1 flex flex-col px-4 justify-around items-center">
-    <h1 class="text-sans text-xl font-medium my-4">{{ taskName }}</h1>
+    <h1 class="text-sans text-xl font-medium my-4 dark:text-white">
+      {{ taskName }}
+    </h1>
     <table
-      class="table-fixed bg-gray-300 rounded-t text-center w-full lg:w-3/4"
+      class="table-fixed bg-gray-300 dark:bg-gray-500 dark:text-gray-200 rounded-t text-center w-full lg:w-3/4"
     >
       <thead>
         <tr>
@@ -11,7 +13,7 @@
           <th class="p-2 w-1/2">Voters</th>
         </tr>
       </thead>
-      <tbody class="bg-gray-200">
+      <tbody class="bg-gray-200 dark:bg-gray-600">
         <tr
           class="last:rounded-b rounded"
           v-for="entry in estimationResultByComplexity"
@@ -44,9 +46,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 import ParticipantItem from '@/components/ParticipantItem.vue';
-import { Estimate } from '../store/types';
 
 @Component({
   components: { ParticipantItem },
