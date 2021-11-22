@@ -8,7 +8,10 @@ export enum Mutations {
 }
 
 export const mutations: MutationTree<State> = {
-  [Mutations.SET_ROOM_INFORMATION](state: State, roomInformation: RoomInformation) {
+  [Mutations.SET_ROOM_INFORMATION](
+    state: State,
+    roomInformation: RoomInformation
+  ) {
     state.room = roomInformation;
     state.participants = [];
     state.ongoingEstimation = undefined;
@@ -37,6 +40,11 @@ export const mutations: MutationTree<State> = {
     state.participants = state.participants.filter(
       p => p.name != event.userName
     );
+  },
+  changeCardDeck(state: State, event: ChangeCardDeck) {
+    if (state.room) {
+      state.room.cardDeck = event.cardDeck;
+    }
   },
   startEstimation(state: State, event: StartEstimation) {
     state.estimationResult = undefined;

@@ -8,6 +8,7 @@ export interface State {
 export interface RoomInformation {
   name: string;
   userName: string;
+  cardDeck: string[];
   isSpectator: boolean;
   showCats: boolean;
 }

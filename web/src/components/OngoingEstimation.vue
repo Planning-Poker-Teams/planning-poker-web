@@ -65,19 +65,7 @@ export default class OngoingEstimation extends Vue {
   lastSelectedCard?: Element;
   lastCardMovement?: { transform: string }[];
 
-  possibleEstimationValues = [
-    '0',
-    '1',
-    '2',
-    '3',
-    '5',
-    '8',
-    '13',
-    '20',
-    '40',
-    '100',
-    '???',
-  ];
+  possibleEstimationValues = this.$store.state.room?.cardDeck;
 
   get votingIsComplete() {
     return this.$store.getters.votingIsComplete;

@@ -38,6 +38,7 @@ const webSocketPlugin = (store: Store<State>) => {
     switch (message.eventType) {
       case 'userJoined':
       case 'userLeft':
+      case 'changeCardDeck':
       case 'startEstimation':
       case 'userHasEstimated':
       case 'estimationResult':
