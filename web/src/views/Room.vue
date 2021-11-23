@@ -8,8 +8,10 @@
       :roomName="roomName"
     />
     <change-card-deck
+      :current-card-deck="currentCardDeck"
       v-if="showChangeDeckModal"
       v-on:hide_change_deck_modal="showChangeDeckModal = false"
+      v-on:change_deck="changeCardDeck"
     />
     <ongoing-estimation
       v-if="isEstimationOngoing"
@@ -62,6 +64,10 @@ export default class Room extends Vue {
     this.$store.dispatch(Actions.LEAVE_ROOM);
   }
 
+  changeCardDeck(newCardDeck: string[]) {
+    this.$store.dispatch(Actions.CHANGE_CARD_DECK, newCardDeck);
+  }
+
   startEstimation(taskName: string) {
     this.$store.dispatch(Actions.REQUEST_START_ESTIMATION, taskName);
   }
@@ -80,6 +86,10 @@ export default class Room extends Vue {
 
   get roomName(): string | undefined {
     return this.$store.state.room?.name;
+  }
+
+  get currentCardDeck(): string[] {
+    return this.$store.state.room?.cardDeck || [];
   }
 
   get taskName(): string | undefined {

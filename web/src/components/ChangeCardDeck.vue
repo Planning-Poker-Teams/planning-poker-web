@@ -11,11 +11,16 @@
           Change Card Deck
         </p>
         <div class="mt-2 px-7 py-3">
-          TODO
+          <input
+            class="mb-2 py-2 px-3 text-lg font-semi bg-white appearance-none border-2 rounded text-grey-darker focus:outline-none focus:border-green-300"
+            type="text"
+            v-model="cardDeckString"
+          />
         </div>
         <div class="items-center px-4 py-3">
           <button
             class="mr-1 px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-5/12 shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
+            @click="changeCardDeck"
           >
             OK
           </button>
@@ -32,12 +37,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class ChangeCardDeck extends Vue {
+  @Prop() private currentCardDeck!: string[];
+
+  cardDeckString = this.currentCardDeck.join(', ');
+
   hideChangeDeckModal() {
     this.$emit('hide_change_deck_modal');
+  }
+
+  changeCardDeck() {
+    this.$emit('change_deck', this.cardDeckString.split(/[ ,]+/));
   }
 }
 </script>

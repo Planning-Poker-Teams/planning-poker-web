@@ -5,6 +5,7 @@ export enum Actions {
   ENTER_ROOM = 'enterRoom', // handled by websocketPlugin
   LEAVE_ROOM = 'leaveRoom', // handled by websocketPlugin
   SEND_MESSAGE = 'sendMessage', // handled by websocketPlugin
+  CHANGE_CARD_DECK = 'changeCardDeck',
   REQUEST_START_ESTIMATION = 'requestStartEstimation',
   SEND_ESTIMATION = 'sendEstimation',
   REQUEST_RESULT = 'requestShowResult',
@@ -14,6 +15,9 @@ export const actions: ActionTree<State, State> = {
   [Actions.ENTER_ROOM]() {},
   [Actions.LEAVE_ROOM]() {},
   [Actions.SEND_MESSAGE]() {},
+  [Actions.CHANGE_CARD_DECK](injectee, newCardDeck: string[]) {
+    console.log(Actions.CHANGE_CARD_DECK, newCardDeck);
+  },
   [Actions.REQUEST_START_ESTIMATION]({ dispatch, state }, taskName: string) {
     if (!state.room) {
       console.error('There is no room', state);
