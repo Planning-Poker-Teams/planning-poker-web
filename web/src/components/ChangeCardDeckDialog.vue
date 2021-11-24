@@ -40,7 +40,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class ChangeCardDeck extends Vue {
+export default class ChangeCardDeckDialog extends Vue {
   @Prop() private currentCardDeck!: string[];
 
   cardDeckString = this.currentCardDeck.join(', ');

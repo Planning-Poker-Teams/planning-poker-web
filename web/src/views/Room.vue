@@ -7,7 +7,7 @@
       :participants="participants"
       :roomName="roomName"
     />
-    <change-card-deck
+    <change-card-deck-dialog
       :current-card-deck="currentCardDeck"
       v-if="showChangeDeckModal"
       v-on:hide_change_deck_modal="showChangeDeckModal = false"
@@ -30,7 +30,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import RoomHeader from '@/components/RoomHeader.vue';
-import ChangeCardDeck from '@/components/ChangeCardDeck.vue';
+import ChangeCardDeckDialog from '@/components/ChangeCardDeckDialog.vue';
 import StartEstimationForm from '@/components/StartEstimationForm.vue';
 import OngoingEstimation from '@/components/OngoingEstimation.vue';
 import EstimationResult from '@/components/EstimationResult.vue';
@@ -41,7 +41,7 @@ import { EstimationState } from '@/store/getters';
 @Component({
   components: {
     RoomHeader,
-    ChangeCardDeck,
+    ChangeCardDeckDialog,
     StartEstimationForm,
     OngoingEstimation,
     EstimationResult,
@@ -66,6 +66,7 @@ export default class Room extends Vue {
 
   changeCardDeck(newCardDeck: string[]) {
     this.$store.dispatch(Actions.CHANGE_CARD_DECK, newCardDeck);
+    this.showChangeDeckModal = false;
   }
 
   startEstimation(taskName: string) {

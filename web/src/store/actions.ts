@@ -15,8 +15,12 @@ export const actions: ActionTree<State, State> = {
   [Actions.ENTER_ROOM]() {},
   [Actions.LEAVE_ROOM]() {},
   [Actions.SEND_MESSAGE]() {},
-  [Actions.CHANGE_CARD_DECK](injectee, newCardDeck: string[]) {
-    console.log(Actions.CHANGE_CARD_DECK, newCardDeck);
+  [Actions.CHANGE_CARD_DECK]({dispatch}, newCardDeck: string[]) {
+    const changeCardDeckMessage: ChangeCardDeck = {
+      eventType: 'changeCardDeck',
+      cardDeck: newCardDeck,
+    };
+    dispatch(Actions.SEND_MESSAGE, changeCardDeckMessage);
   },
   [Actions.REQUEST_START_ESTIMATION]({ dispatch, state }, taskName: string) {
     if (!state.room) {
