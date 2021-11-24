@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <div
-      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
-    />
-    <div
-      class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
-    >
+  <div
+    class="fixed z-10 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex h-screen justify-center items-center"
+  >
+    <div class="mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
       <div class="mt-3 text-center">
         <p class="text-lg leading-6 font-medium text-gray-900">
           Change Card Deck
