@@ -22,6 +22,9 @@ export const getters: GetterTree<State, State> = {
   votingIsComplete: (state: State): boolean => {
     return state.participants.every(p => p.hasEstimated || p.isSpectator);
   },
+  somebodyHasVoted: (state: State): boolean => {
+    return state.participants.find(p => p.hasEstimated) !== undefined;
+  },
   resultBySize: (state: State): EstimationResult | undefined => {
     if (!state.estimationResult) {
       return undefined;

@@ -23,7 +23,9 @@
       <button
         class="absolute top-0 right-0 bg-gray-300 text-gray-700 m-2 p-2 mr-40 border-2 hover:border-gray-400 border-gray-300 rounded"
         type="button"
-        :hidden="$store.state.ongoingEstimation"
+        :hidden="
+          $store.getters.somebodyHasVoted && $store.state.ongoingEstimation
+        "
         @click="showChangeDeckModal"
       >
         <span class="hidden lg:inline mr-2">Change Card Deck</span>
