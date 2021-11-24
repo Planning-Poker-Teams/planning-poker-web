@@ -1,5 +1,6 @@
 export interface State {
   room?: RoomInformation;
+  cardDeck: string[];
   participants: Participant[];
   ongoingEstimation?: Estimation;
   estimationResult?: EstimationResult;
@@ -8,7 +9,6 @@ export interface State {
 export interface RoomInformation {
   name: string;
   userName: string;
-  cardDeck: string[];
   isSpectator: boolean;
   showCats: boolean;
 }

@@ -10,6 +10,7 @@ Vue.use(Vuex);
 
 export const initialState: State = {
   room: undefined,
+  cardDeck: [],
   participants: [],
   ongoingEstimation: undefined,
   estimationResult: undefined,

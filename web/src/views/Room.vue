@@ -8,7 +8,7 @@
       :roomName="roomName"
     />
     <change-card-deck-dialog
-      :current-card-deck="currentCardDeck"
+      :current-card-deck="$store.state.cardDeck"
       v-if="showChangeDeckModal"
       v-on:hide_change_deck_modal="showChangeDeckModal = false"
       v-on:change_deck="changeCardDeck"
@@ -87,10 +87,6 @@ export default class Room extends Vue {
 
   get roomName(): string | undefined {
     return this.$store.state.room?.name;
-  }
-
-  get currentCardDeck(): string[] {
-    return this.$store.state.room?.cardDeck || [];
   }
 
   get taskName(): string | undefined {

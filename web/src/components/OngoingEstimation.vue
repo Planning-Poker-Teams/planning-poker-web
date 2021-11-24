@@ -23,7 +23,7 @@
       <div
         class="flex flex-col justify-center w-16 lg:w-20 h-24 lg:h-32 rounded-lg shadow cursor-pointer select-none relative"
         :class="value == selectedEstimation ? 'bg-red-400 opacity-90' : 'bg-blue-400'"
-        v-for="value in possibleEstimationValues"
+        v-for="value in $store.state.cardDeck"
         :ref="`card-${value}`"
         :key="value"
         @click="sendEstimation(value)"
@@ -64,8 +64,6 @@ export default class OngoingEstimation extends Vue {
 
   lastSelectedCard?: Element;
   lastCardMovement?: { transform: string }[];
-
-  possibleEstimationValues = this.$store.state.room?.cardDeck;
 
   get votingIsComplete() {
     return this.$store.getters.votingIsComplete;

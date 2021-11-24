@@ -42,9 +42,7 @@ export const mutations: MutationTree<State> = {
     );
   },
   changeCardDeck(state: State, event: ChangeCardDeck) {
-    if (state.room) {
-      state.room.cardDeck = event.cardDeck;
-    }
+    state.cardDeck = event.cardDeck;
   },
   startEstimation(state: State, event: StartEstimation) {
     state.estimationResult = undefined;
