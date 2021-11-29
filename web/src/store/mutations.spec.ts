@@ -37,6 +37,7 @@ describe('mutations', () => {
         { ...exampleParticipant, name: 'Bar' },
       ],
       room: exampleRoom,
+      cardDeck: ['S', 'M', 'L'],
     };
 
     mutations.leaveRoom(state);
@@ -44,8 +45,25 @@ describe('mutations', () => {
     expect(state).toEqual(initialState);
   });
 
+  it('stores card deck information', () => {
+    const newCardDeck = ['N', 'E', 'W'];
+
+    const state: State = {
+      ...initialState,
+      cardDeck: ['O', 'L', 'D'],
+    };
+
+    mutations.changeCardDeck(state, {
+      eventType: 'changeCardDeck',
+      cardDeck: newCardDeck,
+    });
+
+    expect(state.cardDeck).toEqual(newCardDeck);
+  });
+
   it('records when participants join', () => {
     const state: State = {
+      ...initialState,
       participants: [exampleParticipant],
       room: exampleRoom,
     };
@@ -65,6 +83,7 @@ describe('mutations', () => {
 
   it('only records each participant once (by userName)', () => {
     const state: State = {
+      ...initialState,
       participants: [exampleParticipant],
       room: exampleRoom,
     };
@@ -81,6 +100,7 @@ describe('mutations', () => {
 
   it('removes participants when they leave', () => {
     const state: State = {
+      ...initialState,
       participants: [
         exampleParticipant,
         { ...exampleParticipant, name: 'Bar' },
@@ -99,6 +119,7 @@ describe('mutations', () => {
 
   it('prepares state if a new estimation is initiated', () => {
     const state: State = {
+      ...initialState,
       participants: [
         { ...exampleParticipant, hasEstimated: true },
         { ...exampleParticipant, name: 'Bar', hasEstimated: true },
@@ -136,6 +157,7 @@ describe('mutations', () => {
 
   it('updates participants when they have voted', () => {
     const state: State = {
+      ...initialState,
       participants: [
         exampleParticipant,
         { ...exampleParticipant, name: 'Bar', hasEstimated: false },
@@ -172,6 +194,7 @@ describe('mutations', () => {
 
   it('resets the state if the estimation result is known', () => {
     const state: State = {
+      ...initialState,
       participants: [
         exampleParticipant,
         { ...exampleParticipant, name: 'Bar', hasEstimated: false },

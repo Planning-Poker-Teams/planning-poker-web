@@ -19,6 +19,7 @@ export const mutations: MutationTree<State> = {
   },
   leaveRoom(state: State) {
     state.room = undefined;
+    state.cardDeck = [];
     state.participants = [];
     state.ongoingEstimation = undefined;
     state.estimationResult = undefined;
