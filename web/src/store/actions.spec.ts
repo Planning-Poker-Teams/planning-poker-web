@@ -11,6 +11,7 @@ describe('actions', () => {
       isSpectator: false,
       showCats: true,
     },
+    cardDeck: ['0', '1', '2', '3', '5', '8'],
     participants: [
       { name: 'Foo', isSpectator: false, hasEstimated: false },
       { name: 'Bar', isSpectator: false, hasEstimated: false },
@@ -68,6 +69,21 @@ describe('actions', () => {
     expect(actionContext.dispatch).toBeCalledWith(Actions.SEND_MESSAGE, {
       eventType: 'showResult',
       userName: 'Foo',
+    });
+  });
+
+  it('requests changing card deck', () => {
+    const newCardDeck = ['S', 'M', 'L'];
+
+    const changeCardDeck = (actions[Actions.CHANGE_CARD_DECK] as any).bind(
+      store
+    );
+
+    changeCardDeck(actionContext, newCardDeck);
+
+    expect(actionContext.dispatch).toBeCalledWith(Actions.SEND_MESSAGE, {
+      eventType: 'changeCardDeck',
+      cardDeck: newCardDeck,
     });
   });
 });
