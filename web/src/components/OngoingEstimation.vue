@@ -20,7 +20,7 @@
     </div>
 
     <div v-if="!isSpectator" class="grid grid-cols-4 col-gap-2 row-gap-2 mb-4">
-      <div
+      <card
         v-for="(value, index) in currentCardDeck"
         :ref="
           el => {
@@ -28,20 +28,11 @@
           }
         "
         :key="value"
-        class="flex flex-col justify-center w-16 lg:w-20 h-24 lg:h-32 rounded-lg shadow cursor-pointer select-none relative"
-        :class="index == selectedEstimation ? 'bg-red-400 opacity-90' : 'bg-blue-400'"
+        :value="value"
+        :selected="index == selectedEstimation"
         @click="sendEstimation(value, index)"
       >
-        <p class="absolute top-0 left-0 text-sm text-white px-1 font-mono">
-          {{ value }}
-        </p>
-        <p class="text-white font-medium text-2xl text-center font-mono">
-          {{ value }}
-        </p>
-        <p class="absolute bottom-0 right-0 transform rotate-180 text-sm text-white px-1 font-mono">
-          {{ value }}
-        </p>
-      </div>
+      </card>
     </div>
     <div v-if="isSpectator" class="row-span-2 flex items-center justify-center">
       <p class="font-medium text-4xl text-gray-500">Participants are voting</p>
@@ -53,6 +44,7 @@
 import { onBeforeUpdate, PropType, Ref, ref, toRef } from 'vue';
 import { Store, useStore } from 'vuex';
 import { State } from '../store/types';
+import Card from './Card.vue';
 
 const CARD_ANIMATION_OPTIONS: KeyframeAnimationOptions = {
   duration: 500,
