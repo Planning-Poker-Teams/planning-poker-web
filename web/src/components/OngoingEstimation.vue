@@ -2,7 +2,7 @@
   <section class="flex-1 flex flex-col items-center p-4">
     <div class="w-full flex justify-center lg:pt-4 pb-4 lg:pb-8">
       <div
-        ref="taskNameRef"
+        ref="cardTargetField"
         class="min-h-24 w-full max-w-lg flex justify-center items-center rounded border-4 border-gray-300 border-dashed"
       >
         <p class="text-2xl font-medium font-sans text-center text-gray-800 p-2">
@@ -24,7 +24,7 @@
         v-for="(value, index) in currentCardDeck"
         :ref="
           el => {
-            selectedCardRefs[index] = el;
+            cardRefList[index] = el;
           }
         "
         :key="value"
@@ -45,101 +45,41 @@ import { onBeforeUpdate, PropType, Ref, ref, toRef } from 'vue';
 import { Store, useStore } from 'vuex';
 import { State } from '../store/types';
 import Card from './Card.vue';
-
-const CARD_ANIMATION_OPTIONS: KeyframeAnimationOptions = {
-  duration: 500,
-  fill: 'forwards',
-  easing: 'ease-in-out',
-};
+import useCardAnimation from './CardAnimation';
 
 defineProps({
   taskName: {
     type: String,
     required: true,
   },
-  currentCardDeck: {
-    type: Array as PropType<string[]>,
-    required: true,
-  },
-});
-const emits = defineEmits(['send-estimation', 'request-result']);
-const store: Store<State> = useStore();
-const votingIsComplete = toRef(store.getters, 'votingIsComplete');
-const isSpectator = ref(store.state.room?.isSpectator);
-const taskNameRef: Ref<Element | undefined> = ref(undefined);
-const selectedEstimation: Ref<number | undefined> = ref(undefined);
-const selectedCardRefs: Ref<Element[]> = ref([]);
-onBeforeUpdate(() => {
-  selectedCardRefs.value = [];
-});
+  emits: ['send-estimation', 'request-result'],
+  setup(props, context) {
+    const store: Store<State> = useStore();
+    const votingIsComplete = toRef(store.getters, 'votingIsComplete');
+    const isSpectator = ref(store.state.room?.isSpectator);
+    const cardTargetField: Ref<Element | undefined> = ref(undefined);
+    const selectedEstimation: Ref<number | undefined> = ref(undefined);
+    const cardRefList: Ref<VueElement[]> = ref([]);
+    onBeforeUpdate(() => {
+      cardRefList.value = [];
+    });
 
-let lastCardMovement: { transform: string }[] = [];
+    const requestResult = () => context.emit('request-result');
 
-const requestResult = () => emits('request-result');
-const calculateAnimationTranslation = (index: number): { x: number; y: number } => {
-  const selectedCard = selectedCardRefs.value[index];
+    let lastSelectedCard: VueElement | undefined;
+    const sendEstimation = (value: string, index: number) => {
+      if (selectedEstimation.value !== index) {
+        try {
+          const { animateCardSelection } = useCardAnimation(
+            cardRefList.value[index],
+            cardTargetField
+          );
 
-  const selectedCardRect = selectedCard.getBoundingClientRect();
-  const selectedCardCentreCoordinates = {
-    x: selectedCardRect.x + selectedCardRect.width / 2,
-    y: selectedCardRect.y + selectedCardRect.height / 2,
-  };
-
-  if (typeof taskNameRef.value !== 'undefined') {
-    const taskNameRect = taskNameRef.value.getBoundingClientRect();
-    const taskNameCentreCoordinates = {
-      x: taskNameRect.x + taskNameRect.width / 2,
-      y: taskNameRect.y + taskNameRect.height / 2,
-    };
-
-    return {
-      x: taskNameCentreCoordinates.x - selectedCardCentreCoordinates.x,
-      y: taskNameCentreCoordinates.y - selectedCardCentreCoordinates.y,
-    };
-  }
-
-  return { x: 0, y: 0 };
-};
-
-const calculateRandomRotation = (): number => {
-  return Math.random() * 180 - 90;
-};
-
-const getCardMovement = (
-  { x, y }: { x: number; y: number },
-  rotation: number
-): { transform: string }[] => {
-  return [
-    { transform: 'translate3D(0, 0, 0) rotate(0)' },
-    {
-      transform: `translate3D(${x}px, ${y}px, 0) rotate(${rotation}deg)`,
-    },
-  ];
-};
-
-const animateCardMovingForwards = (card: Element, cardMovement: { transform: string }[]): void => {
-  card.animate(cardMovement, CARD_ANIMATION_OPTIONS);
-};
-
-// Unfortunately not all browsers support `animation.reverse()`, so we have to create a separate animation manually
-const animateCardMovingBackwards = (card: Element, cardMovement: { transform: string }[]): void => {
-  card.animate(cardMovement, {
-    ...CARD_ANIMATION_OPTIONS,
-    direction: 'reverse',
-  });
-};
-
-let lastSelectedCard: Element;
-const animateCardSelection = (index: number) => {
-  if (lastSelectedCard && lastCardMovement) {
-    animateCardMovingBackwards(lastSelectedCard, lastCardMovement);
-  }
-
-  const selectedCard = selectedCardRefs.value[index];
-  const cardMovement = getCardMovement(
-    calculateAnimationTranslation(index),
-    calculateRandomRotation()
-  );
+          animateCardSelection(lastSelectedCard);
+          lastSelectedCard = cardRefList.value[index];
+        } catch (error) {
+          console.warn('Card selection could not be animated', error);
+        }
 
   animateCardMovingForwards(selectedCard, cardMovement);
 
@@ -147,27 +87,15 @@ const animateCardSelection = (index: number) => {
   lastCardMovement = cardMovement;
 };
 
-const sendEstimation = (value: string, index: number) => {
-  if (selectedEstimation.value !== index) {
-    try {
-      animateCardSelection(index);
-    } catch (error) {
-      console.warn('Card selection could not be animated', error);
-    }
-
-    selectedEstimation.value = index;
-  }
-
-  emits('send-estimation', value);
-};
-
-defineExpose({
-  votingIsComplete,
-  requestResult,
-  isSpectator,
-  selectedEstimation,
-  sendEstimation,
-  selectedCardRefs,
-  taskNameRef,
+    return {
+      votingIsComplete,
+      requestResult,
+      isSpectator,
+      selectedEstimation,
+      sendEstimation,
+      cardRefList,
+      cardTargetField,
+    };
+  },
 });
 </script>
