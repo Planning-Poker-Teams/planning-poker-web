@@ -1,5 +1,8 @@
 import { Ref, VueElement } from 'vue';
 
+export type translates = { transform: string }[];
+type coordinates = { x: number; y: number };
+
 export default function useCardAnimation(
   selectedCard: VueElement,
   cardTargetField: Ref<Element | undefined>
@@ -9,9 +12,7 @@ export default function useCardAnimation(
     fill: 'forwards',
     easing: 'ease-in-out',
   };
-  type translates = { transform: string }[];
-  let lastCardMovement: translates = [];
-  const calculateAnimationTranslation = (card: VueElement): { x: number; y: number } => {
+  const calculateAnimationTranslation = (card: VueElement): coordinates => {
     const selectedCard = card;
 
     const selectedCardRect = selectedCard.$el.getBoundingClientRect();
@@ -35,7 +36,7 @@ export default function useCardAnimation(
 
     return { x: 0, y: 0 };
   };
-  0;
+
   /**
    * return a random degree between -90° and 90°
    */
@@ -43,8 +44,7 @@ export default function useCardAnimation(
     return Math.random() * 180 - 90;
   };
 
-
-  const getCardMovement = ({ x, y }: { x: number; y: number }, rotation: number): translates => {
+  const getCardMovement = ({ x, y }: coordinates, rotation: number): translates => {
     return [
       { transform: 'translate3D(0, 0, 0) rotate(0)' },
       {
@@ -65,7 +65,10 @@ export default function useCardAnimation(
     });
   };
 
-  const animateCardSelection = (lastSelectedCard: VueElement | undefined): void => {
+  const animateCardSelection = (
+    lastSelectedCard: VueElement | undefined,
+    lastCardMovement: translates
+  ): translates => {
     if (lastSelectedCard && lastCardMovement) {
       animateCardMovingBackwards(lastSelectedCard, lastCardMovement);
     }
@@ -77,7 +80,7 @@ export default function useCardAnimation(
 
     animateCardMovingForwards(selectedCard, cardMovement);
 
-    lastCardMovement = cardMovement;
+    return cardMovement;
   };
 
   return {

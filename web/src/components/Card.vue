@@ -34,3 +34,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.bg-red-400 {
+  cursor: default;
+}
+</style>

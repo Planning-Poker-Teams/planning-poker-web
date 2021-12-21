@@ -45,7 +45,7 @@ import { onBeforeUpdate, PropType, Ref, ref, toRef } from 'vue';
 import { Store, useStore } from 'vuex';
 import { State } from '../store/types';
 import Card from './Card.vue';
-import useCardAnimation from './CardAnimation';
+import useCardAnimation, { translates } from './CardAnimation';
 
 defineProps({
   taskName: {
@@ -67,6 +67,7 @@ defineProps({
     const requestResult = () => context.emit('request-result');
 
     let lastSelectedCard: VueElement | undefined;
+    let lastCardMovement: translates;
     const sendEstimation = (value: string, index: number) => {
       if (selectedEstimation.value !== index) {
         try {
@@ -75,7 +76,7 @@ defineProps({
             cardTargetField
           );
 
-          animateCardSelection(lastSelectedCard);
+          lastCardMovement = animateCardSelection(lastSelectedCard, lastCardMovement);
           lastSelectedCard = cardRefList.value[index];
         } catch (error) {
           console.warn('Card selection could not be animated', error);
