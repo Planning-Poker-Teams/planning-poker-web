@@ -34,7 +34,7 @@
       >
       </card>
     </div>
-    <div v-if="isSpectator" class="row-span-2 flex items-center justify-center">
+    <div v-else class="row-span-2 flex items-center justify-center">
       <p class="font-medium text-4xl text-gray-500">Participants are voting</p>
     </div>
   </section>
@@ -55,7 +55,7 @@ defineProps({
   emits: ['send-estimation', 'request-result'],
   setup(props, context) {
     const store: Store<State> = useStore();
-    const votingIsComplete = toRef(store.getters, 'votingIsComplete');
+    const votingIsComplete: Ref<boolean> = toRef(store.getters, 'votingIsComplete');
     const isSpectator = ref(store.state.room?.isSpectator);
     const cardTargetField: Ref<Element | undefined> = ref(undefined);
     const selectedEstimation: Ref<number | undefined> = ref(undefined);
