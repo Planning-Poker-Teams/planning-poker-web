@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full w-full flex flex-col items-center bg-gray-100 lg:shadow-lg lg:rounded-lg relative overflow-y-scroll"
+    class="h-full w-full flex flex-col items-center bg-gray-100 lg:shadow-lg lg:rounded-lg relative overflow-y-auto"
   >
     <room-header
       :participants="participants"
