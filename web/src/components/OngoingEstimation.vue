@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUpdate, PropType, Ref, ref, toRef } from 'vue';
+import { onBeforeUpdate, PropType, Ref, ref, toRef, VueElement } from 'vue';
 import { Store, useStore } from 'vuex';
 import { State } from '../store/types';
 import Card from './Card.vue';
@@ -52,51 +52,50 @@ defineProps({
     type: String,
     required: true,
   },
-  emits: ['send-estimation', 'request-result'],
-  setup(props, context) {
-    const store: Store<State> = useStore();
-    const votingIsComplete: Ref<boolean> = toRef(store.getters, 'votingIsComplete');
-    const isSpectator = ref(store.state.room?.isSpectator);
-    const cardTargetField: Ref<Element | undefined> = ref(undefined);
-    const selectedEstimation: Ref<number | undefined> = ref(undefined);
-    const cardRefList: Ref<VueElement[]> = ref([]);
-    onBeforeUpdate(() => {
-      cardRefList.value = [];
-    });
+  currentCardDeck: {
+    type: Array as PropType<string[]>,
+    required: true,
+  },
+});
+const emits = defineEmits(['send-estimation', 'request-result']);
+const store: Store<State> = useStore();
+const votingIsComplete: Ref<boolean> = toRef(store.getters, 'votingIsComplete');
+const isSpectator = ref(store.state.room?.isSpectator);
+const cardTargetField: Ref<Element | undefined> = ref(undefined);
+const selectedEstimation: Ref<number | undefined> = ref(undefined);
+const cardRefList: Ref<VueElement[]> = ref([]);
+onBeforeUpdate(() => {
+  cardRefList.value = [];
+});
 
-    const requestResult = () => context.emit('request-result');
+const requestResult = () => emits('request-result');
 
-    let lastSelectedCard: VueElement | undefined;
-    let lastCardMovement: translates;
-    const sendEstimation = (value: string, index: number) => {
-      if (selectedEstimation.value !== index) {
-        try {
-          const { animateCardSelection } = useCardAnimation(
-            cardRefList.value[index],
-            cardTargetField
-          );
+let lastSelectedCard: VueElement | undefined;
+let lastCardMovement: translates;
+const sendEstimation = (value: string, index: number) => {
+  if (selectedEstimation.value !== index) {
+    try {
+      const { animateCardSelection } = useCardAnimation(cardRefList.value[index], cardTargetField);
 
-          lastCardMovement = animateCardSelection(lastSelectedCard, lastCardMovement);
-          lastSelectedCard = cardRefList.value[index];
-        } catch (error) {
-          console.warn('Card selection could not be animated', error);
-        }
+      lastCardMovement = animateCardSelection(lastSelectedCard, lastCardMovement);
+      lastSelectedCard = cardRefList.value[index];
+    } catch (error) {
+      console.warn('Card selection could not be animated', error);
+    }
 
-  animateCardMovingForwards(selectedCard, cardMovement);
+    selectedEstimation.value = index;
+  }
 
-  lastSelectedCard = selectedCard;
-  lastCardMovement = cardMovement;
+  emits('send-estimation', value);
 };
 
-    return {
-      votingIsComplete,
-      requestResult,
-      isSpectator,
-      selectedEstimation,
-      sendEstimation,
-      cardRefList,
-      cardTargetField,
-    };
-  },
+defineExpose({
+  votingIsComplete,
+  requestResult,
+  isSpectator,
+  selectedEstimation,
+  sendEstimation,
+  cardRefList,
+  cardTargetField,
 });
 </script>

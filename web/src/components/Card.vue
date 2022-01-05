@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col justify-center w-16 lg:w-20 h-24 lg:h-32 rounded-lg shadow cursor-pointer select-none relative"
+    class="flex flex-col justify-center w-16 lg:w-20 h-24 lg:h-32 rounded-lg shadow cursor-pointer select-none"
     :class="selected ? 'bg-red-400 opacity-90' : 'bg-blue-400'"
   >
     <p class="absolute top-0 left-0 text-sm text-white px-1 font-mono">
@@ -15,22 +15,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  props: {
-    value: {
-      type: String,
-      required: true,
-    },
-    selected: {
-      type: Boolean,
-      required: true,
-    },
+<script setup lang="ts">
+defineProps({
+  value: {
+    type: String,
+    required: true,
   },
-  setup() {
-    return {};
+  selected: {
+    type: Boolean,
+    required: true,
   },
 });
 </script>

@@ -6,6 +6,7 @@ describe('ongoing estimation', () => {
     const { wrapper } = createWrapper(OngoingEstimation, {
       props: {
         taskName: 'test-task',
+        currentCardDeck: ['0, 1, 2, 3, 5, 8, 13'],
       },
     });
     expect(wrapper.findAll('div')[1].exists()).toBeTruthy();
@@ -17,6 +18,7 @@ describe('ongoing estimation', () => {
       {
         props: {
           taskName: 'test-task',
+          currentCardDeck: ['0, 1, 2, 3, 5, 8, 13'],
         },
       },
       {
@@ -25,6 +27,7 @@ describe('ongoing estimation', () => {
           { name: 'test-user-b', isSpectator: false, hasEstimated: true },
           { name: 'test-user-c', isSpectator: false, hasEstimated: true },
         ],
+        cardDeck: ['0, 1, 2, 3, 5, 8, 13'],
       }
     );
     expect(wrapper.find('button[type=submit]').exists()).toBeTruthy();
@@ -35,6 +38,7 @@ describe('ongoing estimation', () => {
       {
         props: {
           taskName: 'test-task',
+          currentCardDeck: ['0, 1, 2, 3, 5, 8, 13'],
         },
       },
       {
@@ -43,6 +47,7 @@ describe('ongoing estimation', () => {
           { name: 'test-user-b', isSpectator: false, hasEstimated: false },
           { name: 'test-user-c', isSpectator: false, hasEstimated: true },
         ],
+        cardDeck: ['0, 1, 2, 3, 5, 8, 13'],
       }
     );
     expect(wrapper.find('button[type=submit]').exists()).toBeFalsy();
@@ -53,6 +58,7 @@ describe('ongoing estimation', () => {
       {
         props: {
           taskName: 'test-task',
+          currentCardDeck: ['0, 1, 2, 3, 5, 8, 13'],
         },
       },
       {
@@ -63,6 +69,7 @@ describe('ongoing estimation', () => {
           showCats: false,
         },
         participants: [],
+        cardDeck: ['0, 1, 2, 3, 5, 8, 13'],
       }
     );
     expect(wrapper.findAll('div')[2].exists()).toBeTruthy();
