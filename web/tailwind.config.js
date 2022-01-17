@@ -1,7 +1,5 @@
 module.exports = {
-  purge: {
-    content: ['./public/index.html', './src/**/*.html', './src/**/*.vue'],
-  },
+  content: ['./public/index.html', './src/**/*.html', './src/**/*.vue'],
   theme: {
     screens: {
       sm: '640px',
@@ -142,9 +140,6 @@ module.exports = {
         70: '.7',
       },
     },
-  },
-  variants: {
-    margin: ['first', 'last'],
   },
   plugins: [],
 };
