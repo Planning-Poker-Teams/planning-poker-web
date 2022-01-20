@@ -19,7 +19,7 @@
       </button>
     </div>
 
-    <div v-if="!isSpectator" class="grid grid-cols-4 col-gap-2 row-gap-2 mb-4">
+    <div v-if="!isSpectator" class="grid grid-cols-4 gap-x-2 gap-y-2 mb-4">
       <div
         v-for="(value, index) in currentCardDeck"
         :ref="
@@ -38,7 +38,7 @@
         <p class="text-white font-medium text-2xl text-center font-mono">
           {{ value }}
         </p>
-        <p class="absolute bottom-0 right-0 transform rotate-180 text-sm text-white px-1 font-mono">
+        <p class="absolute bottom-0 right-0 rotate-180 text-sm text-white px-1 font-mono">
           {{ value }}
         </p>
       </div>
